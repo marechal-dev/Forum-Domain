@@ -4,33 +4,28 @@ import { UniqueEntityId } from '@/core/entities/value-objects/unique-entity-id'
 import { Entity } from '@/core/entities/entity'
 import { Optional } from '@/core/types/optional'
 
-import { Slug } from './value-objects/slug'
-
-interface QuestionProps {
+interface AnswerProps {
   authorId: UniqueEntityId
-  bestAnswerId?: UniqueEntityId
-  title: string
+  questionId: UniqueEntityId
   content: string
-  slug: Slug
   createdAt: Date
   updatedAt?: Date
 }
 
-export class Question extends Entity<QuestionProps> {
+export class Answer extends Entity<AnswerProps> {
   public static create(
-    props: Optional<QuestionProps, 'createdAt' | 'slug'>,
+    props: Optional<AnswerProps, 'createdAt'>,
     id?: UniqueEntityId,
   ) {
-    const question = new Question(
+    const answer = new Answer(
       {
         ...props,
-        slug: props.slug ?? Slug.createFromText(props.title),
         createdAt: props.createdAt ?? new Date(),
       },
       id,
     )
 
-    return question
+    return answer
   }
 
   private touch(): void {
@@ -41,36 +36,12 @@ export class Question extends Entity<QuestionProps> {
     return this.props.authorId
   }
 
-  public get bestAnswerId(): UniqueEntityId | undefined {
-    return this.props.bestAnswerId
-  }
-
-  public set bestAnswerId(bestAnswerId: UniqueEntityId | undefined) {
-    this.props.bestAnswerId = bestAnswerId
-    this.touch()
-  }
-
-  public get title(): string {
-    return this.props.title
-  }
-
-  public set title(title: string) {
-    this.props.title = title
-    this.props.slug = Slug.createFromText(title)
-    this.touch()
+  public get questionId(): UniqueEntityId {
+    return this.props.questionId
   }
 
   public get content(): string {
     return this.props.content
-  }
-
-  public set content(content: string) {
-    this.props.content = content
-    this.touch()
-  }
-
-  public get slug(): Slug {
-    return this.props.slug
   }
 
   public get isNew(): boolean {
@@ -87,5 +58,10 @@ export class Question extends Entity<QuestionProps> {
 
   public get updatedAt(): Date | undefined {
     return this.props.updatedAt
+  }
+
+  public set content(content: string) {
+    this.props.content = content
+    this.touch()
   }
 }
