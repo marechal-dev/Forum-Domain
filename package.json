@@ -1,12 +1,22 @@
 {
-  "name": "4-ddd",
+  "name": "forum-api",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "main.js",
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": ""
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "author": {
+    "name": "Pietro Piva Vieira",
+    "email": "pietro.developer@gmail.com"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "20.2.3",
+    "typescript": "5.0.4"
+  }
 }
